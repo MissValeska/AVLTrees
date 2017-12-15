@@ -64,16 +64,16 @@ public class AVL_Tree<E extends DeepCloneable<E>> extends BST<E> {
         if (node == null)
             return (new AVL_Node<E>(e));
 
-        if (e < node.key)
-            node.left = insert(node.left, e);
-        else if (e > node.key)
-            node.right = insert(node.right, e);
+        if (cmp.compare(e, node.getData()) < 0)
+            node.setLeftChild(insert(node.getLeftChild(), e));
+        else if (cmp.compare(e, node.getData()) > 0)
+            node.setRightChild(insert(node.getRightChild(), e));
         else // Duplicate keys not allowed
             return node;
 
         /* 2. Update height of this ancestor node */
-        node.height = 1 + max(height(node.left),
-                height(node.right));
+        node.setNodeHeight(1 + Math.max(heightOf(node.getLeftChild()),
+                heightOf(node.getRightChild())));
 
         /* 3. Get the balance factor of this ancestor
               node to check whether this node became
@@ -82,23 +82,23 @@ public class AVL_Tree<E extends DeepCloneable<E>> extends BST<E> {
 
         // If this node becomes unbalanced, then there
         // are 4 cases Left Left Case
-        if (balance > 1 && e < node.left.key)
-            return rightRotate(node);
+        if (balance > 1 && cmp.compare(e, node.getLeftChild().getData()) < 0)
+            return rotateWithLeftChild(node);
 
         // Right Right Case
-        if (balance < -1 && e > node.right.key)
-            return leftRotate(node);
+        if (balance < -1 && cmp.compare(e, node.getRightChild().getData()) > 0)
+            return rotateWithRightChild(node);
 
         // Left Right Case
-        if (balance > 1 && e > node.left.key) {
-            node.left = leftRotate(node.left);
-            return rightRotate(node);
+        if (balance > 1 && cmp.compare(e, node.getLeftChild().getData()) > 0) {
+            node.setLeftChild(rotateWithRightChild(node.getLeftChild()));
+            return rotateWithLeftChild(node);
         }
 
         // Right Left Case
-        if (balance < -1 && e < node.right.key) {
-            node.right = rightRotate(node.right);
-            return leftRotate(node);
+        if (balance < -1 && cmp.compare(e, node.getRightChild().getData()) < 0) {
+            node.setRightChild(rotateWithLeftChild(node.getRightChild()));
+            return rotateWithRightChild(node);
         }
 
         /* return the (unchanged) node pointer */
@@ -179,7 +179,7 @@ public class AVL_Tree<E extends DeepCloneable<E>> extends BST<E> {
             return node;
 
         // STEP 2: UPDATE HEIGHT OF THE CURRENT NODE
-        node.setHeight(Math.max(heightOf(node.getLeftChild()), heightOf(node.getRightChild())) + 1);
+        node.setNodeHeight(Math.max(heightOf(node.getLeftChild()), heightOf(node.getRightChild())) + 1);
 
         // STEP 3: GET THE BALANCE FACTOR OF THIS NODE (to check whether
         //  this node became unbalanced)
@@ -218,8 +218,8 @@ public class AVL_Tree<E extends DeepCloneable<E>> extends BST<E> {
         AVL_Node<E> k1 = k2.getLeftChild();
         k2.setLeftChild(k1.getRightChild());
         k1.setRightChild(k2);
-        k2.setHeight( Math.max( heightOf(k2.getLeftChild()),  heightOf(k2.getRightChild()) ) + 1 );
-        k1.setHeight( Math.max( heightOf(k1.getLeftChild()),  k2.getHeight() ) + 1 );
+        k2.setNodeHeight( Math.max( heightOf(k2.getLeftChild()),  heightOf(k2.getRightChild()) ) + 1 );
+        k1.setNodeHeight( Math.max( heightOf(k1.getLeftChild()),  k2.getHeight() ) + 1 );
         return k1;
     }
 
@@ -230,8 +230,8 @@ public class AVL_Tree<E extends DeepCloneable<E>> extends BST<E> {
         AVL_Node<E> k1 = k2.getRightChild();
         k2.setRightChild(k1.getLeftChild());
         k1. setLeftChild(k2);
-        k2.setHeight( Math.max( heightOf(k2.getLeftChild()),  heightOf(k2.getRightChild()) ) + 1 );
-        k1.setHeight( Math.max( heightOf(k1.getRightChild()),  k2.getHeight() ) + 1 );
+        k2.setNodeHeight( Math.max( heightOf(k2.getLeftChild()),  heightOf(k2.getRightChild()) ) + 1 );
+        k1.setNodeHeight( Math.max( heightOf(k1.getRightChild()),  k2.getHeight() ) + 1 );
         return k1;
     }
 

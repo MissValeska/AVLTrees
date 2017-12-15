@@ -18,7 +18,7 @@ public class AVL_Node<T> extends BinaryNode<T> {
         this.setData(nodeToCovert.getData());
         this.setLeftChild(nodeToCovert.getLeftChild());
         this.setRightChild(nodeToCovert.getRightChild());
-        this.setHeight(nodeToCovert.getHeight());
+        this.setNodeHeight(nodeToCovert.getHeight());
 
 
     }
@@ -45,7 +45,7 @@ public class AVL_Node<T> extends BinaryNode<T> {
         return height;
     }
 
-    public void setHeight(int h) {
+    public void setNodeHeight(int h) {
         height = h;
     }
 
