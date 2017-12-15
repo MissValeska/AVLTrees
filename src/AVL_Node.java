@@ -13,16 +13,28 @@ public class AVL_Node<T> extends BinaryNode<T> {
 
     }
 
-    public AVL_Node(BinaryNode<T> nodeToConvert) {
+    private AVL_Node<T> conversionHelper(BinaryNode<T> nodeToConvert) {
 
         if(nodeToConvert == null) {
-            return;
+            return null;
         }
+
+        AVL_Node<T> tmp = new AVL_Node<>();
+
+        tmp.setData(nodeToConvert.getData());
+        tmp.setNodeHeight(nodeToConvert.getHeight());
+        tmp.setRightChild(conversionHelper(nodeToConvert.getRightChild()));
+        tmp.setLeftChild(conversionHelper(nodeToConvert.getLeftChild()));
+        return tmp;
+
+    }
+
+    public AVL_Node(BinaryNode<T> nodeToConvert) {
 
         this.setData(nodeToConvert.getData());
         this.setNodeHeight(nodeToConvert.getHeight());
-        this.setRightChild(new AVL_Node<>(nodeToConvert.getRightChild()));
-        this.setLeftChild(new AVL_Node<>(nodeToConvert.getLeftChild()));
+        this.setRightChild(conversionHelper(nodeToConvert.getRightChild()));
+        this.setLeftChild(conversionHelper(nodeToConvert.getLeftChild()));
 
     }
 
@@ -33,7 +45,7 @@ public class AVL_Node<T> extends BinaryNode<T> {
         height = h;
     } // end default constructor
 
-    @Override
+    /*@Override
     public AVL_Node<T> getLeftChild() {
         return new AVL_Node<>(super.getLeftChild());
     }
@@ -41,7 +53,7 @@ public class AVL_Node<T> extends BinaryNode<T> {
     @Override
     public AVL_Node<T> getRightChild() {
         return new AVL_Node<>(super.getRightChild());
-    }
+    }*/
 
     public int getNodeHeight() {
         height = getHeight();
