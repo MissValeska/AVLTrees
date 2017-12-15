@@ -54,20 +54,22 @@ public class AVL_Tree<E extends DeepCloneable<E>> extends BST<E> {
         AVL_Node<E> tmp = new AVL_Node<>();
 
 
+
+
         return true;
 
     }
 
-    AVL_Node<E> insert(AVL_Node<E> node, E e) {
+    AVL_Node<E> _insert(AVL_Node<E> node, E e) {
 
         /* 1.  Perform the normal BST insertion */
         if (node == null)
             return (new AVL_Node<E>(e));
 
         if (cmp.compare(e, node.getData()) < 0)
-            node.setLeftChild(insert(node.getLeftChild(), e));
+            node.setLeftChild(_insert(node.getLeftChild(), e));
         else if (cmp.compare(e, node.getData()) > 0)
-            node.setRightChild(insert(node.getRightChild(), e));
+            node.setRightChild(_insert(node.getRightChild(), e));
         else // Duplicate keys not allowed
             return node;
 

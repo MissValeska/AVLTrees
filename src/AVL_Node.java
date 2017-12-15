@@ -13,13 +13,16 @@ public class AVL_Node<T> extends BinaryNode<T> {
 
     }
 
-    public AVL_Node(BinaryNode<T> nodeToCovert) {
+    public AVL_Node(BinaryNode<T> nodeToConvert) {
 
-        this.setData(nodeToCovert.getData());
-        this.setLeftChild(nodeToCovert.getLeftChild());
-        this.setRightChild(nodeToCovert.getRightChild());
-        this.setNodeHeight(nodeToCovert.getHeight());
+        if(nodeToConvert == null) {
+            return;
+        }
 
+        this.setData(nodeToConvert.getData());
+        this.setNodeHeight(nodeToConvert.getHeight());
+        this.setRightChild(new AVL_Node<>(nodeToConvert.getRightChild()));
+        this.setLeftChild(new AVL_Node<>(nodeToConvert.getLeftChild()));
 
     }
 

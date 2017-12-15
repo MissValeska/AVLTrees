@@ -102,7 +102,7 @@ extends BinaryTree<E> {
 	 * Return true if the element is inserted successfully */
 	public boolean insert(E e)
 	{
-        root = _insert(root, e); // calls private insert which updates root after insertion
+        root = _insert(root, e); // calls private _insert which updates root after insertion
         size++;
         return true; // Element inserted successfully
 	}
