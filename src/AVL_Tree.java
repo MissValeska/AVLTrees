@@ -54,7 +54,7 @@ public class AVL_Tree<E extends DeepCloneable<E>> extends BST<E> {
 
     }
 
-    AVL_Node<E> _insert(AVL_Node<E> node, E e) {
+    private AVL_Node<E> _insert(AVL_Node<E> node, E e) {
 
         /* 1.  Perform the normal BST insertion */
         if (node == null)
@@ -114,7 +114,7 @@ public class AVL_Tree<E extends DeepCloneable<E>> extends BST<E> {
 
     }
 
-    public AVL_Node<E> _delete(AVL_Node<E> node, E e)
+    private AVL_Node<E> _delete(AVL_Node<E> node, E e)
     {
         // Do normal deletion
         if (node == null)
@@ -233,7 +233,12 @@ public class AVL_Tree<E extends DeepCloneable<E>> extends BST<E> {
 
 
     public int heightOf(AVL_Node<E> tmp) {
-        return tmp.getNodeHeight();
+        if(tmp == null) {
+            return 0;
+        }
+        else {
+            return tmp.getNodeHeight();
+        }
     }
 
     // do a single LEFT rotation passing k3's left child, then return the result of calling rotateWithLeftChild passing the parameter
