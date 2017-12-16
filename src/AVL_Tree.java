@@ -48,9 +48,8 @@ public class AVL_Tree<E extends DeepCloneable<E>> extends BST<E> {
     @Override
     public boolean insert(E e) {
 
-        super.insert(e);
-
-        _insert(getRoot(), e);
+        super.root = _insert(getRoot(), e);
+        size++;
         return true;
 
     }
@@ -105,10 +104,12 @@ public class AVL_Tree<E extends DeepCloneable<E>> extends BST<E> {
     @Override
     public boolean delete(E e) {
 
-        super.delete(e);
-
         foundNode = false;		// initialize boolean instance variable
-        _delete(getRoot(), e); //call private method to do actual deletion
+        super.root = _delete(getRoot(), e); //call private method to do actual deletion
+        if( foundNode )
+        {
+            size--;// Element deleted successfully
+        }
         return foundNode;
 
     }
@@ -224,7 +225,7 @@ public class AVL_Tree<E extends DeepCloneable<E>> extends BST<E> {
     {
         AVL_Node<E> k1 = k2.getRightChild();
         k2.setRightChild(k1.getLeftChild());
-        k1. setLeftChild(k2);
+        k1.setLeftChild(k2);
         k2.setNodeHeight( Math.max( heightOf(k2.getLeftChild()),  heightOf(k2.getRightChild()) ) + 1 );
         k1.setNodeHeight( Math.max( heightOf(k1.getRightChild()),  k2.getHeight() ) + 1 );
         return k1;
