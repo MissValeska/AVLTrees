@@ -6,26 +6,18 @@ public class AVL_Tree<E extends DeepCloneable<E>> extends BST<E> {
     // DECLARE A PRIVATE COMPARATOR INSTANCE VARIABLE HERE!
     private Comparator<E> cmp; // a private comparator variable for comparing two objects according any provided member variable.
 
-    private AVL_Node<E> ourRoot;
-
     public AVL_Tree(Comparator<E> cmp) {
         super(cmp);
         this.cmp = cmp;
-        ourRoot = new AVL_Node<>(super.root);
     }
 
     public AVL_Tree(AVL_Tree<E> sourceTree) {
         super(sourceTree);
         this.cmp = sourceTree.cmp;
-        ourRoot = new AVL_Node<>(super.root);
     }
 
     public AVL_Tree(E[] objects) {
-        // An empty array to avoid having two trees sorted differently.
-        super((E[]) new Object[]{});
-        ourRoot = new AVL_Node<>(super.root);
-        for (int i = 0; i < objects.length; i++)
-            insert(objects[i]);
+        super(objects);
     }
 
     // Find the left most node of a given AVL_Node
@@ -49,15 +41,16 @@ public class AVL_Tree<E extends DeepCloneable<E>> extends BST<E> {
 
     private AVL_Node<E> getRoot() {
 
-        return ourRoot;
+        return (AVL_Node<E>) super.root;
 
     }
 
     @Override
     public boolean insert(E e) {
 
+        super.insert(e);
+
         _insert(getRoot(), e);
-        size++;
         return true;
 
     }
@@ -112,13 +105,10 @@ public class AVL_Tree<E extends DeepCloneable<E>> extends BST<E> {
     @Override
     public boolean delete(E e) {
 
-        foundNode = false;		// initialize boolean instance variable
-        ourRoot = _delete(getRoot(), e); //call private method to do actual deletion
+        super.delete(e);
 
-        if( foundNode )
-        {
-            size--;// Element deleted successfully
-        }
+        foundNode = false;		// initialize boolean instance variable
+        _delete(getRoot(), e); //call private method to do actual deletion
         return foundNode;
 
     }

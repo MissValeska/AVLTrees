@@ -45,15 +45,15 @@ public class AVL_Node<T> extends BinaryNode<T> {
         height = h;
     } // end default constructor
 
-    /*@Override
+    @Override
     public AVL_Node<T> getLeftChild() {
-        return new AVL_Node<>(super.getLeftChild());
+        return (AVL_Node<T>) super.getLeftChild();
     }
 
     @Override
     public AVL_Node<T> getRightChild() {
-        return new AVL_Node<>(super.getRightChild());
-    }*/
+        return (AVL_Node<T>) super.getRightChild();
+    }
 
     public int getNodeHeight() {
         height = getHeight();
